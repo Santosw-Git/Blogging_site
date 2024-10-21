@@ -50,7 +50,7 @@ const signupUser = asyncHandler(async (req, res) => {
 
    if(fullname.length < 3){
         return res.status(403)
-        .json({"error":"fullname must be 3 letters long"});
+        .json({"error":"fullname must be 3 letter long"});
     }
 
     if(!(email.length)){
