@@ -1,5 +1,4 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
-import mongoose from "mongoose";
 import { nanoid } from "nanoid";
 import User from "../Schema/User.js";
 import { ApiError } from "../utils/ApiError.js";
@@ -25,7 +24,6 @@ const formatDataToSend = async (user)=>{
     const accessToken =  user.generateAccessToken();
     const refreshToken = user.generateRefreshToken();
     user.personal_info.refreshToken = refreshToken;
-    await user.save();  
     console.log("refreshToken",refreshToken);
     
 
@@ -85,7 +83,7 @@ const signupUser = asyncHandler(async (req, res) => {
         }
     })
 
-    user.save()
+    await user.save()
     .then(async (user)=>{
         return res.status(200).json(await formatDataToSend(user))
     })
@@ -98,4 +96,47 @@ const signupUser = asyncHandler(async (req, res) => {
 
 })
 
-export default signupUser;
+const signinUser = asyncHandler(async (req, res) => {
+
+    const {email, password} = req.body;
+    console.log(password, email);
+    
+
+    if(!email && !password){
+        return res.status(403)
+        .json({"error":"email and password are required"})
+    }
+
+    const user = await User.findOne(
+        {
+            $or:[{"personal_info.email":email},{"personal_info.password":password}]
+        }
+    )
+    console.log(user);
+    
+
+    if(!user){
+        return res.status(403)
+        .json({"error":"email or password is incorrect"})
+    }
+
+    // console.log(password);
+    
+
+    const isPasswordValid = await user.isPasswordCorrect(password);
+    console.log(isPasswordValid);
+    
+    if(!isPasswordValid){
+        return res.status(403)
+        .json({"error":"password is incorrect"})
+    }
+
+    return res.status(200).json(await formatDataToSend(user))
+
+})
+
+
+export {
+    signupUser,
+    signinUser
+};

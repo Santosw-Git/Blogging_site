@@ -2,7 +2,7 @@ POST http://localhost:4000/api/v1/users/signup
 Content-Type: application/json
 
 {
-    "fullname":"amitta",
-    "password":"Done11",
-    "email":"amit@mail.com"
+    "fullname":"santosh khadka",
+    "password":"CrDJ6a*h$!fLcp3",
+    "email":"santoshkhadka2326@gmail.com"
 }

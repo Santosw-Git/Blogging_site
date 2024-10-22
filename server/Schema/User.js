@@ -20,7 +20,7 @@ const userSchema = mongoose.Schema({
             type: String,
             required: true,
             lowercase: true,
-            unique: true
+            unique: true,
         },
         password: String,
         username: {
@@ -100,14 +100,15 @@ const userSchema = mongoose.Schema({
 
 userSchema.pre("save", async function (next) {
 
-    if (!this.isModified("password")) return next();
-    this.password = await bcrypt.hash(this.password, 10);
+    if (!this.isModified("personal_info.password")) return next();
+    this.personal_info.password = await bcrypt.hash(this.personal_info.password, 10);
     next();
 })
 
 userSchema.methods.isPasswordCorrect = async function (password) {
-
-    return await bcrypt.compare(password, this.password);
+    console.log("Plain password:", password);  // Logs the plain password from the request
+    console.log("Hashed password:", this.personal_info.password); 
+    return await bcrypt.compare(password, this.personal_info.password);
 }
 
 
