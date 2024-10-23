@@ -2,11 +2,11 @@ import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/navbar.component";
 import UserAuthForm from "./pages/userAuthForm.page";
 import { lookInSession } from "./common/session";
-import React, { useContext, useEffect } from "react";
-import { UserProvider, UserContext } from "./context/User.context";
+import React, { useEffect } from "react";
+import { UserProvider, useSession } from "./context/User.context";
 
 const AppContent = () => {
-  const userState = useContext(UserContext);
+  const userState = useSession();
   const { userAuth, setUserAuth } = userState;
 
   useEffect(() => {
