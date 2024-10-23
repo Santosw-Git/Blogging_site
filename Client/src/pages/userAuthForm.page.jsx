@@ -5,16 +5,14 @@ import AnimationWrapper from "../common/page-animation";
 import { toast, Toaster } from "react-hot-toast";
 import axios from "axios";
 import { storeInSession } from "../common/session";
-import { UserContext } from "../App";
+import { UserContext } from "../context/User.context";
 import React from "react";
 import { Navigate } from "react-router-dom";
 const UserAuthForm = ({ type }) => {
-  const {
-    userAuth: { accessToken },
-    setUserAuth,
-  } = React.useContext(UserContext);
-
-  console.log(accessToken);
+  const data = React.useContext(UserContext);
+  const { userAuth, setUserAuth } = data;
+  // console.log(userAuth.accessToken);
+  const { accessToken } = userAuth;
 
   const UserAuthThroughServer = (serverRoute, formData) => {
     axios
