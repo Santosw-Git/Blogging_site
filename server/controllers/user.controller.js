@@ -140,7 +140,7 @@ const signinUserWithGoogle = asyncHandler(async (req, res) => {
 
      const {accessToken} = req.body;
 
-     
+
 
 
 
@@ -149,5 +149,6 @@ const signinUserWithGoogle = asyncHandler(async (req, res) => {
 
 export {
     signupUser,
-    signinUser
+    signinUser,
+    signinUserWithGoogle
 };
