@@ -3,6 +3,7 @@ import { nanoid } from "nanoid";
 import User from "../Schema/User.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
+import admin from "firebase-admin";
 
 const generateUsername = async (email)=>{
 
@@ -132,6 +133,16 @@ const signinUser = asyncHandler(async (req, res) => {
     }
 
     return res.status(200).json(await formatDataToSend(user))
+
+})
+
+const signinUserWithGoogle = asyncHandler(async (req, res) => {
+
+     const {accessToken} = req.body;
+
+     
+
+
 
 })
 
