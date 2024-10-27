@@ -119,3 +119,6 @@ dist
 
 # End of https://mrkandreev.name/snippets/gitignore-generator/#Node
 .DS_Store
+
+# Firebase service account credentials
+blogging-102a1-firebase-adminsdk-dt30u-bd58786a82.json
