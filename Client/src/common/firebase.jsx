@@ -2,7 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyB-aG4ya9Z1KQxh7yMu_ngc0arBVNaesu8",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: "blogging-102a1.firebaseapp.com",
   projectId: "blogging-102a1",
   storageBucket: "blogging-102a1.appspot.com",
