@@ -122,18 +122,22 @@ const signinUser = asyncHandler(async (req, res) => {
     }
 
     // console.log(password);
-    
+    if(!user.google_auth){
+        const isPasswordValid = await user.isPasswordCorrect(password);
+        console.log(isPasswordValid);
 
-    const isPasswordValid = await user.isPasswordCorrect(password);
-    console.log(isPasswordValid);
-    
-    if(!isPasswordValid){
-        return res.status(403)
-        .json({"error":"password is incorrect"})
+        if(!isPasswordValid){
+            return res.status(403)
+            .json({"error":"password is incorrect"})
+    }
+    return res.status(200).json(await formatDataToSend(user))
     }
 
-    return res.status(200).json(await formatDataToSend(user))
+    else{
+        return res.status(403).json({"error":"you are already signed in with a google account"})
+    }
 
+    
 })
 
 const signinUserWithGoogle = asyncHandler(async (req, res) => {
@@ -145,7 +149,7 @@ const signinUserWithGoogle = asyncHandler(async (req, res) => {
 
      const {email,name, picture} = decodedToken;
 
-     let user = await User.findOne({"personal_info.email":email}).select("personal_info.fullname personal_info.username personal_info.profile_img google_auth");
+     let user = await User.findOne({"personal_info.email":email}).select("personal_info.fullname personal_info.username google_auth");
 
      if(!user){
          const username = await generateUsername(email);
