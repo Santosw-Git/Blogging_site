@@ -3,7 +3,7 @@ import { nanoid } from "nanoid";
 import User from "../Schema/User.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
-import admin from "firebase-admin";
+import {getAuth} from "firebase-admin/auth";
 
 const generateUsername = async (email)=>{
 
@@ -140,10 +140,37 @@ const signinUserWithGoogle = asyncHandler(async (req, res) => {
 
      const {accessToken} = req.body;
 
+     const decodedToken = await getAuth().verifyIdToken(accessToken)
+    //  console.log(decodedToken);
 
+     const {email,name, picture} = decodedToken;
 
+     let user = await User.findOne({"personal_info.email":email}).select("personal_info.fullname personal_info.username personal_info.profile_img google_auth");
 
+     if(!user){
+         const username = await generateUsername(email);
+         const newUser = new User({
+             personal_info:{
+                 fullname:name,
+                 email,
+                 username,
+                 profile_img:picture
+             },
+             google_auth:true
+         })
+ 
+         user = await newUser.save()
+        
+         console.log("user",user);
+         return res.status(200).json(await formatDataToSend(user))
+     }
 
+     else{
+        if(!user.google_auth){
+            return res.status(403).json({"error":"you are already signed in with a different account"})
+        }
+        return res.status(200).json(await formatDataToSend(user))
+     }
 })
 
 

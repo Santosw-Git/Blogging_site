@@ -22,7 +22,10 @@ const userSchema = mongoose.Schema({
             lowercase: true,
             unique: true,
         },
-        password: String,
+        password: {
+            type: String,
+            required: false,
+        },
         username: {
             type: String,
             minlength: [3, 'Username must be 3 letters long'],
@@ -100,7 +103,8 @@ const userSchema = mongoose.Schema({
 
 userSchema.pre("save", async function (next) {
 
-    if (!this.isModified("personal_info.password")) return next();
+    if (!this.isModified("personal_info.password") || this.google_auth) return next();
+    // if(this.google_auth) return next();
     this.personal_info.password = await bcrypt.hash(this.personal_info.password, 10);
     next();
 })
