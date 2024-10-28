@@ -22,6 +22,7 @@ const UserAuthForm = ({ type }) => {
         // Corrected to destructure data
         storeInSession("User", JSON.stringify(data));
         // console.log(sessionStorage);
+        console.log(data);
         setUserAuth(data);
       })
       .catch(({ response }) => {
@@ -77,7 +78,13 @@ const UserAuthForm = ({ type }) => {
     e.preventDefault();
     await authWithGoogle()
       .then((user) => {
-        console.log(user);
+        // console.log(user);
+        const serverRoute = "/google-auth";
+        const formData = {
+          accessToken: user.accessToken,
+        };
+
+        UserAuthThroughServer(serverRoute, formData);
       })
       .catch((error) => {
         toast.error("trouble login in with google");
