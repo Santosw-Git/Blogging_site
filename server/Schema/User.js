@@ -110,8 +110,8 @@ userSchema.pre("save", async function (next) {
 })
 
 userSchema.methods.isPasswordCorrect = async function (password) {
-    console.log("Plain password:", password);  // Logs the plain password from the request
-    console.log("Hashed password:", this.personal_info.password); 
+    // console.log("Plain password:", password);  // Logs the plain password from the request
+    // console.log("Hashed password:", this.personal_info.password); 
     return await bcrypt.compare(password, this.personal_info.password);
 }
 

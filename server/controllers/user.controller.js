@@ -1,8 +1,6 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { nanoid } from "nanoid";
 import User from "../Schema/User.js";
-import { ApiError } from "../utils/ApiError.js";
-import { ApiResponse } from "../utils/ApiResponse.js";
 import {getAuth} from "firebase-admin/auth";
 
 const generateUsername = async (email)=>{
@@ -72,7 +70,7 @@ const signupUser = asyncHandler(async (req, res) => {
 
     // const username = email.split("@")[0];
     const username = await generateUsername(email);
-    console.log(username);
+    // console.log(username);
     
 
     const user = new User({
@@ -100,7 +98,7 @@ const signupUser = asyncHandler(async (req, res) => {
 const signinUser = asyncHandler(async (req, res) => {
 
     const {email, password} = req.body;
-    console.log(password, email);
+    // console.log(password, email);
     
 
     if(!email && !password){
@@ -113,7 +111,7 @@ const signinUser = asyncHandler(async (req, res) => {
             $or:[{"personal_info.email":email},{"personal_info.password":password}]
         }
     )
-    console.log(user);
+    // console.log(user);
     
 
     if(!user){
@@ -124,7 +122,7 @@ const signinUser = asyncHandler(async (req, res) => {
     // console.log(password);
     if(!user.google_auth){
         const isPasswordValid = await user.isPasswordCorrect(password);
-        console.log(isPasswordValid);
+        // console.log(isPasswordValid);
 
         if(!isPasswordValid){
             return res.status(403)
@@ -165,13 +163,13 @@ const signinUserWithGoogle = asyncHandler(async (req, res) => {
  
          user = await newUser.save()
         
-         console.log("user",user);
+        //  console.log("user",user);
          return res.status(200).json(await formatDataToSend(user))
      }
 
      else{
         if(!user.google_auth){
-            return res.status(403).json({"error":"you are already signed in with a different account"})
+            return res.status(403).json({"error":"you have already signed in with a different account"})
         }
         return res.status(200).json(await formatDataToSend(user))
      }
