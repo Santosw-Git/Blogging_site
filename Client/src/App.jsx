@@ -4,6 +4,7 @@ import UserAuthForm from "./pages/userAuthForm.page";
 import { lookInSession } from "./common/session";
 import React, { useEffect } from "react";
 import { UserProvider, useSession } from "./context/User.context";
+import { Editor } from "./pages/editor.pages";
 
 const AppContent = () => {
   const userState = useSession();
@@ -16,10 +17,11 @@ const AppContent = () => {
       : setUserAuth({ accessToken: null });
   }, [setUserAuth]);
 
-  console.log(userAuth);
+  // console.log(userAuth);
 
   return (
     <Routes>
+      <Route path="/editor" element={<Editor />} />
       <Route path="/" element={<Navbar />}>
         <Route path="signin" element={<UserAuthForm type="sign-in" />} />
         <Route path="signup" element={<UserAuthForm type="sign-up" />} />
