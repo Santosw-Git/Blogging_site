@@ -10,7 +10,7 @@ const Editor = (editor) => {
     userAuth: { accessToken },
     setUserAuth,
   } = userState;
-  console.log(accessToken);
+  // console.log(accessToken);
 
   return accessToken === null ? (
     <Navigate to="/signin" />

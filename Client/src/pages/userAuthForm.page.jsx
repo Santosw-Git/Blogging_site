@@ -22,7 +22,7 @@ const UserAuthForm = ({ type }) => {
         // Corrected to destructure data
         storeInSession("User", JSON.stringify(data));
         // console.log(sessionStorage);
-        console.log(data);
+        // console.log(data);
         setUserAuth(data);
       })
       .catch(({ response }) => {
