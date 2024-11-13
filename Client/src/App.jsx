@@ -5,7 +5,7 @@ import { lookInSession } from "./common/session";
 import React, { useEffect } from "react";
 import { UserProvider, useSession } from "./context/User.context";
 import { Editor } from "./pages/editor.pages";
-
+import { EditorContextProvider } from "./context/Editor.context";
 const AppContent = () => {
   const userState = useSession();
   const { userAuth, setUserAuth } = userState;
@@ -16,8 +16,6 @@ const AppContent = () => {
       ? setUserAuth(JSON.parse(userInSession))
       : setUserAuth({ accessToken: null });
   }, [setUserAuth]);
-
-  // console.log(userAuth);
 
   return (
     <Routes>
@@ -33,7 +31,9 @@ const AppContent = () => {
 const App = () => {
   return (
     <UserProvider>
-      <AppContent />
+      <EditorContextProvider>
+        <AppContent />
+      </EditorContextProvider>
     </UserProvider>
   );
 };
