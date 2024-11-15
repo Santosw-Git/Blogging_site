@@ -1,6 +1,6 @@
 import React, { useContext, useState, createContext } from "react";
 
-const blogStructure = {
+let blogStructure = {
   title: "",
   banner: "",
   content: [],

@@ -9,7 +9,6 @@ import EditorJs from "@editorjs/editorjs";
 import { tools } from "./tools.component";
 import toast from "react-hot-toast";
 const BlogEditor = () => {
-  const data = useEditorContext();
   const {
     blog,
     setBlog,
@@ -18,11 +17,17 @@ const BlogEditor = () => {
     editorState,
     setEditorState,
   } = useEditorContext();
-  console.log("Context Value", useEditorContext());
 
   const { banner, tags, title, des, content } = blog;
 
-  // console.log(blog);
+  console.log("banner", banner);
+
+  // let data = useEditorContext();
+  // let {
+  //   blog: { title, banner, tags, content },
+  //   setTextEditor,
+  // } = data;
+  // console.log("data", data);
 
   useEffect(() => {
     setTextEditor(
@@ -54,7 +59,10 @@ const BlogEditor = () => {
         // console.log(imageFromBackend);
         // blogBannerRef.current.src = imageFromBackend;
 
-        setBlog({ ...blog, banner: imageFromBackend });
+        setBlog((blog) => ({
+          ...blog,
+          banner: imageFromBackend,
+        }));
       })
       .catch((error) => {
         console.error("Error uploading file:", error);

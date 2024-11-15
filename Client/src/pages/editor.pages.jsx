@@ -8,7 +8,7 @@ import {
 } from "../context/Editor.context";
 const Editor = (editor) => {
   const EditorState = useEditorContext();
-  console.log(EditorState);
+  // console.log(EditorState);
 
   const { editorState } = EditorState;
   console.log(editorState);
