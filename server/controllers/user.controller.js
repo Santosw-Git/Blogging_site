@@ -23,7 +23,7 @@ const formatDataToSend = async (user)=>{
     const accessToken =  user.generateAccessToken();
     const refreshToken = user.generateRefreshToken();
     user.personal_info.refreshToken = refreshToken;
-    console.log("refreshToken",refreshToken);
+    // console.log("refreshToken",refreshToken);
     
 
     return {
