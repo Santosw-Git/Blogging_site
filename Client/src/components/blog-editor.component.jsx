@@ -9,7 +9,7 @@ import EditorJs from "@editorjs/editorjs";
 import { tools } from "./tools.component";
 import toast from "react-hot-toast";
 const BlogEditor = () => {
-  const {
+  let {
     blog,
     setBlog,
     textEditor,
@@ -19,20 +19,12 @@ const BlogEditor = () => {
   } = useEditorContext();
 
   const { banner, tags, title, des, content } = blog;
-
-  console.log("banner", banner);
-
-  // let data = useEditorContext();
-  // let {
-  //   blog: { title, banner, tags, content },
-  //   setTextEditor,
-  // } = data;
-  // console.log("data", data);
+  console.log(blog);
 
   useEffect(() => {
     setTextEditor(
       new EditorJs({
-        holderId: "textEditor",
+        holder: "textEditor",
         data: "",
         tools: tools,
         placeholder: "Lets write an awesome story",
@@ -59,10 +51,7 @@ const BlogEditor = () => {
         // console.log(imageFromBackend);
         // blogBannerRef.current.src = imageFromBackend;
 
-        setBlog((blog) => ({
-          ...blog,
-          banner: imageFromBackend,
-        }));
+        setBlog({ ...blog, banner: imageFromBackend });
       })
       .catch((error) => {
         console.error("Error uploading file:", error);
@@ -70,9 +59,7 @@ const BlogEditor = () => {
   };
 
   const handleTitleKeyDown = (event) => {
-    // console.log(event);
     if (event.keyCode === 13) {
-      //enter key
       event.preventDefault();
     }
   };
@@ -86,16 +73,21 @@ const BlogEditor = () => {
     setBlog({ ...blog, title: input.value });
   };
 
-  const handlePublish = () => {
-    console.log("title", title);
-    console.log("banner", banner);
-
+  const handlePublish = (e) => {
     if (!title.length) {
       return toast.error("Please give a title");
     }
 
     if (!banner.length) {
       return toast.error("Please upload a banner");
+    }
+
+    console.log(textEditor.isReady);
+
+    if (textEditor.isReady) {
+      textEditor.save().then((data) => {
+        console.log(data);
+      });
     }
   };
 

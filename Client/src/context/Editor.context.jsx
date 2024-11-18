@@ -17,11 +17,11 @@ export const useEditorContext = () => {
   return useContext(EditorContext);
 };
 const EditorContextProvider = ({ children }) => {
-  const [blog, setBlog] = useState(blogStructure);
+  let [blog, setBlog] = useState(blogStructure);
 
-  const [editorState, setEditorState] = useState("editor");
+  let [editorState, setEditorState] = useState("editor");
 
-  const [textEditor, setTextEditor] = useState({ isReady: false });
+  let [textEditor, setTextEditor] = useState({ isReady: false });
 
   return (
     <EditorContext.Provider
