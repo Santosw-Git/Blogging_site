@@ -7,7 +7,7 @@ import { useEffect, useRef } from "react";
 import { useEditorContext } from "../context/Editor.context";
 import EditorJs from "@editorjs/editorjs";
 import { tools } from "./tools.component";
-import toast from "react-hot-toast";
+import { Toaster, toast } from "react-hot-toast";
 const BlogEditor = () => {
   let {
     blog,
@@ -18,14 +18,14 @@ const BlogEditor = () => {
     setEditorState,
   } = useEditorContext();
 
-  const { banner, tags, title, des, content } = blog;
+  let { banner, tags, title, des, content } = blog;
   console.log(blog);
 
   useEffect(() => {
     setTextEditor(
       new EditorJs({
         holder: "textEditor",
-        data: "",
+        data: content,
         tools: tools,
         placeholder: "Lets write an awesome story",
       })
@@ -35,7 +35,6 @@ const BlogEditor = () => {
   let blogBannerRef = useRef();
   const handleBannerUpload = (e) => {
     const img = e.target.files[0];
-    // console.log("img", img);
 
     const formData = new FormData();
     formData.append("file", img); // 'file' should match the name used in `upload.single("file")` on the backend.
@@ -48,7 +47,6 @@ const BlogEditor = () => {
       })
       .then((response) => {
         imageFromBackend = response.data.url;
-        // console.log(imageFromBackend);
         // blogBannerRef.current.src = imageFromBackend;
 
         setBlog({ ...blog, banner: imageFromBackend });
@@ -65,8 +63,7 @@ const BlogEditor = () => {
   };
 
   const handleTitleChange = (event) => {
-    let input = event.target; //hold the ref of textarea
-    // console.log(input.scrollHeight);
+    let input = event.target;
     input.style.height = "auto";
     input.style.height = input.scrollHeight + "px";
 
@@ -74,20 +71,30 @@ const BlogEditor = () => {
   };
 
   const handlePublish = (e) => {
-    if (!title.length) {
-      return toast.error("Please give a title");
-    }
-
     if (!banner.length) {
       return toast.error("Please upload a banner");
     }
 
-    console.log(textEditor.isReady);
+    if (!title.length) {
+      return toast.error("Please give a title");
+    }
 
     if (textEditor.isReady) {
-      textEditor.save().then((data) => {
-        console.log(data);
-      });
+      textEditor
+        .save()
+        .then((data) => {
+          console.log(data);
+          if (data.blocks.length) {
+            setBlog({ ...blog, content: data });
+            setEditorState("publish");
+            console.log(blog);
+          } else {
+            return toast.error("Please write something to publish");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   };
 
@@ -111,6 +118,7 @@ const BlogEditor = () => {
 
       <AnimationWrapper>
         <section>
+          <Toaster />
           <div className="mx-auto max-w-[900px] w-full ">
             <div className="relative aspect-video bg-white border-4 border-grey cursor-pointer hover:opacity-80">
               <label htmlFor="uploadBannner">
@@ -130,6 +138,7 @@ const BlogEditor = () => {
             </div>
 
             <textarea
+              defaultValue={title}
               placeholder="Blog Title"
               className="text-4xl font-medium w-full h-20 outline-none resize-none  mt-10 leading-tight placeholder:opacity-40"
               onKeyDown={handleTitleKeyDown}
