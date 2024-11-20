@@ -18,4 +18,25 @@ const FileUpload = asyncHandler (async (req,res)=>{
 
 });
 
-export { FileUpload};
+const PublishBlog = asyncHandler (async (req,res)=>{
+
+    const {title,banner,content,des,tags}  = req.body;
+
+    let authorId = req.user;
+    console.log(authorId);
+    
+
+    // if(!title.length) return res.status(404).json({"error": "Please give a title"});
+
+    // if(!content.length) return res.status(404).json({"error": "Please write something"});
+
+    // if(!banner.length) return res.status(404).json({"error": "Please upload a banner"});
+
+    
+
+    
+});
+
+export { FileUpload
+    ,PublishBlog
+};
