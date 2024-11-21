@@ -2,15 +2,23 @@ import AnimationWrapper from "../common/page-animation";
 import { Toaster, toast } from "react-hot-toast";
 import { useEditorContext } from "../context/Editor.context";
 import { Tag } from "./tags.component";
+import { useSession } from "../context/User.context";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 const PublishForm = () => {
   const characterLimit = 200;
   const tagLimit = 7;
+  let navigate = useNavigate();
   let {
     blog,
     blog: { banner, title, des, content, tags },
     setEditorState,
     setBlog,
   } = useEditorContext();
+
+  let {
+    userAuth: { accessToken },
+  } = useSession();
 
   const handleCloseEvent = () => {
     setEditorState("editor");
@@ -51,6 +59,56 @@ const PublishForm = () => {
 
       event.target.value = "";
     }
+  };
+
+  const handlePublishBlog = (event) => {
+    if (event.target.className.includes("disabled")) {
+      return;
+    }
+    if (!title.length) {
+      return toast.error(`Please give a title`);
+    }
+
+    if (!des.length) {
+      return toast.error(`Please give a description`);
+    }
+    if (!tags.length) {
+      return toast.error(`Please give a tags`);
+    }
+
+    let loadingToast = toast.loading("Publishing...");
+
+    event.target.classList.add("disabled");
+
+    let blogObj = {
+      title,
+      banner,
+      des,
+      tags,
+      content,
+      draft: false,
+    };
+    axios
+      .post(import.meta.env.VITE_SERVER_URL + "/publish-form", blogObj, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      .then(() => {
+        toast.dismiss(loadingToast);
+        event.target.classList.remove("disabled");
+        toast.success("Published successfully");
+
+        setTimeout(() => {
+          navigate("/");
+        }, 500);
+      })
+      .catch(({ response }) => {
+        event.target.classList.add("disabled");
+        toast.dismiss(loadingToast);
+        toast.error(response.data.error);
+      });
   };
   return (
     <AnimationWrapper>
@@ -116,7 +174,9 @@ const PublishForm = () => {
           <p className="mt-1 mb-4 text-dark-grey text-right">
             {tagLimit - tags.length} Tags left
           </p>
-          <button className="btn-dark px-8">Publish</button>
+          <button className="btn-dark px-8" onClick={handlePublishBlog}>
+            Publish
+          </button>
         </div>
       </section>
     </AnimationWrapper>
