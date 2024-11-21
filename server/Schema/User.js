@@ -1,7 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { refreshToken } from "firebase-admin/app";
 
 
 let profile_imgs_name_list = ["Garfield", "Tinkerbell", "Annie", "Loki", "Cleo", "Angel", "Bob", "Mia", "Coco", "Gracie", "Bear", "Bella", "Abby", "Harley", "Cali", "Leo", "Luna", "Jack", "Felix", "Kiki"];
@@ -104,7 +103,6 @@ const userSchema = mongoose.Schema({
 userSchema.pre("save", async function (next) {
 
     if (!this.isModified("personal_info.password") || this.google_auth) return next();
-    // if(this.google_auth) return next();
     this.personal_info.password = await bcrypt.hash(this.personal_info.password, 10);
     next();
 })
@@ -120,7 +118,7 @@ userSchema.methods.generateAccessToken = function () {
 
     return jwt.sign(
         {
-            _id: this.personal_info._id,
+            _id: this._id,
             username: this.personal_info.username,
             email: this.personal_info.email,
             fullname:this.personal_info.fullname

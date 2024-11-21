@@ -23,7 +23,6 @@ const formatDataToSend = async (user)=>{
     const accessToken =  user.generateAccessToken();
     const refreshToken = user.generateRefreshToken();
     user.personal_info.refreshToken = refreshToken;
-    // console.log("refreshToken",refreshToken);
     
 
     return {
@@ -37,10 +36,7 @@ const formatDataToSend = async (user)=>{
 
 const signupUser = asyncHandler(async (req, res) => {
 
-    const { fullname, email, password } = req.body;
-    // console.log(fullname.length);
-    // console.log(!email.length);
-    
+    const { fullname, email, password } = req.body; 
     
     let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; // regex for email
     let passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/; // regex for password
@@ -55,8 +51,6 @@ const signupUser = asyncHandler(async (req, res) => {
         .json({"error":"email is required"})
     }
 
-    // console.log(email);
-
     if(!emailRegex.test(email)){
         return res.status(403)
         .json({"error":"invalid email"})
@@ -70,9 +64,7 @@ const signupUser = asyncHandler(async (req, res) => {
 
     // const username = email.split("@")[0];
     const username = await generateUsername(email);
-    // console.log(username);
     
-
     const user = new User({
         personal_info:{
             fullname,
@@ -98,8 +90,6 @@ const signupUser = asyncHandler(async (req, res) => {
 const signinUser = asyncHandler(async (req, res) => {
 
     const {email, password} = req.body;
-    // console.log(password, email);
-    
 
     if(!email && !password){
         return res.status(403)
@@ -110,19 +100,15 @@ const signinUser = asyncHandler(async (req, res) => {
         {
             $or:[{"personal_info.email":email},{"personal_info.password":password}]
         }
-    )
-    // console.log(user);
-    
+    )    
 
     if(!user){
         return res.status(403)
         .json({"error":"email or password is incorrect"})
     }
 
-    // console.log(password);
     if(!user.google_auth){
         const isPasswordValid = await user.isPasswordCorrect(password);
-        // console.log(isPasswordValid);
 
         if(!isPasswordValid){
             return res.status(403)
@@ -143,7 +129,6 @@ const signinUserWithGoogle = asyncHandler(async (req, res) => {
      const {accessToken} = req.body;
 
      const decodedToken = await getAuth().verifyIdToken(accessToken)
-    //  console.log(decodedToken);
 
      const {email,name, picture} = decodedToken;
 
@@ -163,7 +148,6 @@ const signinUserWithGoogle = asyncHandler(async (req, res) => {
  
          user = await newUser.save()
         
-        //  console.log("user",user);
          return res.status(200).json(await formatDataToSend(user))
      }
 

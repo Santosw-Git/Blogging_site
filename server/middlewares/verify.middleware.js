@@ -1,9 +1,7 @@
 
 import jwt from "jsonwebtoken";
 const VerifyJwt = (req,res,next)=>{
-    const authHeader = req.headers["authorization"];
-    // console.log(authHeader);
-    
+    const authHeader = req.headers["authorization"];    
 
     const token = authHeader && authHeader.split(" ")[1];
 
@@ -14,7 +12,7 @@ const VerifyJwt = (req,res,next)=>{
             return res.status(403).json({err: "Invalid accessToken"})
         }
 
-        req.user = _id;
+        req.user = user._id;
         next();
         });
 

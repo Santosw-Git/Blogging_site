@@ -1,4 +1,4 @@
-# POST http://localhost:4000/api/v1/users/signin
+# POST http://localhost:4000/api/v1/users/signup
 # Content-Type: application/json
 
 # {
@@ -7,14 +7,19 @@
 #     "email":"santoshkhadka2326@gmail.com"
 # }
 
-# eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNhbnRvc2hraGFka2EyMzI2IiwiZW1haWwiOiJzYW50b3Noa2hhZGthMjMyNkBnbWFpbC5jb20iLCJmdWxsbmFtZSI6InNhbnRvc2gga2hhZGthIiwiaWF0IjoxNzMyMTE1MDQ2LCJleHAiOjE3MzIyMDE0NDZ9.lijFmeLouZHTDywMr0jq5B8TKWEsLL_2B7G5KE04glo
-
+# eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzNlZjQ4YWVhNjBjNTk3ZDVjMGQ0YjMiLCJ1c2VybmFtZSI6InNhbnRvc2hraGFka2EyMzI2IiwiZW1haWwiOiJzYW50b3Noa2hhZGthMjMyNkBnbWFpbC5jb20iLCJmdWxsbmFtZSI6InNhbnRvc2gga2hhZGthIiwiaWF0IjoxNzMyMTc5MDgyLCJleHAiOjE3MzIyNjU0ODJ9.5j_PnjwAoFjkACGSVJRvKo6L7QqPtHC4A8tsmT3hqi0
 POST http://localhost:4000/api/v1/users/publish-form
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNhbnRvc2hraGFka2EyMzI2IiwiZW1haWwiOiJzYW50b3Noa2hhZGthMjMyNkBnbWFpbC5jb20iLCJmdWxsbmFtZSI6InNhbnRvc2gga2hhZGthIiwiaWF0IjoxNzMyMTE1MDQ2LCJleHAiOjE3MzIyMDE0NDZ9.lijFmeLouZHTDywMr0jq5B8TKWEsLL_2B7G5KE04glo
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzNlZjQ4YWVhNjBjNTk3ZDVjMGQ0YjMiLCJ1c2VybmFtZSI6InNhbnRvc2hraGFka2EyMzI2IiwiZW1haWwiOiJzYW50b3Noa2hhZGthMjMyNkBnbWFpbC5jb20iLCJmdWxsbmFtZSI6InNhbnRvc2gga2hhZGthIiwiaWF0IjoxNzMyMTc5MDgyLCJleHAiOjE3MzIyNjU0ODJ9.5j_PnjwAoFjkACGSVJRvKo6L7QqPtHC4A8tsmT3hqi0
 
 {
 
-    "title":"done"
+    "title":"done shjhd &37639%@ shhs",
+    "banner":"https://example.com",
+    "des":"this is a short des",
+    "content":{
+        "blocks":[1,2,3 ,4,5,6,7,8,9]
+    },
+    "tags":["tag1","tag2","tag3","tag4","tag5"]
+
 }
