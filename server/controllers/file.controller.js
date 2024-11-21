@@ -16,7 +16,6 @@ const FileUpload = asyncHandler (async (req,res)=>{
 
     return res.status(200).json({"url": result.url});
     
-
 });
 
 const PublishBlog = asyncHandler (async (req,res)=>{
@@ -62,8 +61,6 @@ const PublishBlog = asyncHandler (async (req,res)=>{
         }).catch(err=>res.status(400).json({"error":err}))
 
     }).catch(err=>res.status(400).json({"error":err}))
-
-
     
 });
 
