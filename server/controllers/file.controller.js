@@ -64,6 +64,21 @@ const PublishBlog = asyncHandler (async (req,res)=>{
     
 });
 
+const LatestBlog = asyncHandler(async (req,res)=>{
+    const maxLimit = 5;
+
+    Blog.find({draft:false})
+    .populate("author","personal_info.profile_img personal_info.username personal_info.fullname")
+    .sort({"publishedAt":-1})
+    .select("blog_id title des banner activity tags publishedAt -_id")
+    .limit(maxLimit)
+    .then(blogs=>{
+        return res.status(200).json({blogs})
+    })
+    .catch(err=>res.status(400).json({"error":err.message}))
+})
+
 export { FileUpload
     ,PublishBlog
+    ,LatestBlog
 };
