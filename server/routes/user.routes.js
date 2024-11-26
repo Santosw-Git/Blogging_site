@@ -9,5 +9,5 @@ router.post("/signin",signinUser);
 router.post("/google-auth",signinUserWithGoogle);
 router.post("/file-upload",upload.single("file") ,FileUpload);
 router.post("/publish-form",VerifyJwt,PublishBlog);
-router.get("/latest-blogs",VerifyJwt,LatestBlog);
+router.get("/latest-blogs",LatestBlog);
 export default router;
