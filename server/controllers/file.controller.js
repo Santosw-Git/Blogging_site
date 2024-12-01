@@ -78,7 +78,21 @@ const LatestBlog = asyncHandler(async (req,res)=>{
     .catch(err=>res.status(400).json({"error":err.message}))
 })
 
+const TrendingBlog = asyncHandler(async (req,res)=>{
+    Blog.find({draft:false})
+    .populate("author","personal_info.profile_img personal_info.username personal_info.fullname -_id")
+    .sort({"activity.total_read":1,"activity.total_likes":1})
+    .select("blog_id title  publishedAt -_id")
+    .limit(4)
+    .then(blogs=>{
+        return res.status(200).json({blogs})
+    })
+    .catch(err=>res.status(400).json({"error":err.message}))
+
+})
+
 export { FileUpload
     ,PublishBlog
     ,LatestBlog
+    ,TrendingBlog
 };
