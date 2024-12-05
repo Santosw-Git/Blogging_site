@@ -8,27 +8,27 @@
 # }
 
 # # eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzQ1NGY3MDg1ZDY4OTY0ZmRhMmI1MWUiLCJ1c2VybmFtZSI6InNhbnRvc2hraGFka2EyMjYiLCJlbWFpbCI6InNhbnRvc2hraGFka2EyMjZAZ21haWwuY29tIiwiZnVsbG5hbWUiOiJzYW50b3NoIGtoYWRrYSIsImlhdCI6MTczMjU5NTU2OSwiZXhwIjoxNzMyNjgxOTY5fQ.VVGChRxYGVdMV6JTNulm54ucR0UaZU8NdTfhcOfWc88# POST http://localhost:4000/api/v1/users/publish-form
-# POST http://localhost:4000/api/v1/users/publish-form
-# Content-Type: application/json
-# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzQ1NGY3MDg1ZDY4OTY0ZmRhMmI1MWUiLCJ1c2VybmFtZSI6InNhbnRvc2hraGFka2EyMjYiLCJlbWFpbCI6InNhbnRvc2hraGFka2EyMjZAZ21haWwuY29tIiwiZnVsbG5hbWUiOiJzYW50b3NoIGtoYWRrYSIsImlhdCI6MTczMjU5NTU2OSwiZXhwIjoxNzMyNjgxOTY5fQ.VVGChRxYGVdMV6JTNulm54ucR0UaZU8NdTfhcOfWc88
+POST http://localhost:4000/api/v1/users/publish-form
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzQ1NGY3MDg1ZDY4OTY0ZmRhMmI1MWUiLCJ1c2VybmFtZSI6InNhbnRvc2hraGFka2EyMjYiLCJlbWFpbCI6InNhbnRvc2hraGFka2EyMjZAZ21haWwuY29tIiwiZnVsbG5hbWUiOiJzYW50b3NoIGtoYWRrYSIsImlhdCI6MTczMjU5NTU2OSwiZXhwIjoxNzMyNjgxOTY5fQ.VVGChRxYGVdMV6JTNulm54ucR0UaZU8NdTfhcOfWc88
 
-#  {
-#         "title": "Travel Hacks &58294%@ Adventures",
-#         "banner": "https://example.com/travel",
-#         "des": "Save time and money with these travel hacks.",
-#         "content": {
-#             "blocks": [
-#                 "Book flights during off-peak times to save money.",
-#                 "Use packing cubes to organize your luggage.",
-#                 "Download offline maps to navigate without internet.",
-#                 "Learn basic phrases in the local language.",
-#                 "Opt for homestays to experience authentic culture.",
-#                 "Pack a reusable water bottle to stay hydrated.",
-#                 "Keep copies of important documents for emergencies."
-#             ] 
-#         },
-#         "tags": ["travel", "hacks", "adventure", "budget", "tips"]
-#     }
+ {
+        "title": "Travel Hacks &58294%@ Adventures",
+        "banner": "https://example.com/travel",
+        "des": "Save time and money with these travel hacks.",
+        "content": {
+            "blocks": [
+                "Book flights during off-peak times to save money.",
+                "Use packing cubes to organize your luggage.",
+                "Download offline maps to navigate without internet.",
+                "Learn basic phrases in the local language.",
+                "Opt for homestays to experience authentic culture.",
+                "Pack a reusable water bottle to stay hydrated.",
+                "Keep copies of important documents for emergencies."
+            ] 
+        },
+        "tags": ["travel", "hacks", "adventure", "budget", "tips"]
+    }
 
 GET  http://localhost:4000/api/v1/users/trending-blogs
 # Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzQ1NGY3MDg1ZDY4OTY0ZmRhMmI1MWUiLCJ1c2VybmFtZSI6InNhbnRvc2hraGFka2EyMjYiLCJlbWFpbCI6InNhbnRvc2hraGFka2EyMjZAZ21haWwuY29tIiwiZnVsbG5hbWUiOiJzYW50b3NoIGtoYWRrYSIsImlhdCI6MTczMjU5NTU2OSwiZXhwIjoxNzMyNjgxOTY5fQ.VVGChRxYGVdMV6JTNulm54ucR0UaZU8NdTfhcOfWc88
