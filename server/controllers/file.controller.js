@@ -65,12 +65,16 @@ const PublishBlog = asyncHandler (async (req,res)=>{
 });
 
 const LatestBlog = asyncHandler(async (req,res)=>{
+    let {page}=req.body;
+    // console.log(page);
+    
     const maxLimit = 5;
 
     Blog.find({draft:false})
-    .populate("author","personal_info.profile_img personal_info.username personal_info.fullname")
+    .populate("author","personal_info.profile_img personal_info.username personal_info.fullname -_id")
     .sort({"publishedAt":-1})
     .select("blog_id title des banner activity tags publishedAt -_id")
+    .skip((page-1)*maxLimit)
     .limit(maxLimit)
     .then(blogs=>{
         return res.status(200).json({blogs})
@@ -81,7 +85,7 @@ const LatestBlog = asyncHandler(async (req,res)=>{
 const TrendingBlog = asyncHandler(async (req,res)=>{
     Blog.find({draft:false})
     .populate("author","personal_info.profile_img personal_info.username personal_info.fullname -_id")
-    .sort({"activity.total_read":1,"activity.total_likes":1})
+    .sort({"activity.total_read":-1,"activity.total_likes":-1})
     .select("blog_id title  publishedAt -_id")
     .limit(4)
     .then(blogs=>{
@@ -91,8 +95,43 @@ const TrendingBlog = asyncHandler(async (req,res)=>{
 
 })
 
+const SearchBlog = asyncHandler(async (req, res) => {  
+    console.log("data received");
+      
+
+    let {tags} = req.body;
+
+    let query = {tags: tags,draft:false};
+    console.log(query);
+    
+
+    Blog.find(query)
+    .populate("author","personal_info.profile_img personal_info.username personal_info.fullname -_id")
+    .sort({"publishedAt":-1})
+    .select("blog_id title des banner activity tags publishedAt -_id")
+    .limit(4)
+    .then(blogs=>{        
+        return res.status(200).json({blogs})
+    })
+    .catch(err=>res.status(400).json({"error":err.message}))
+})
+
+
+const AllLatestBlogCount=asyncHandler(async (req, res) =>{
+    // console.log("data");
+    Blog.countDocuments({draft:false})
+    .then(count=>{
+        return res.status(200).json({totalDocs:count})
+    })
+    .catch(err=>res.status(400).json({"error":err.message}))
+    
+})
+
+
 export { FileUpload
     ,PublishBlog
     ,LatestBlog
     ,TrendingBlog
+    ,SearchBlog
+    ,AllLatestBlogCount
 };
