@@ -8,6 +8,7 @@ import { MinimalBlogPost } from "../components/minimal.component";
 import { activeTabButton } from "../components/inpage.component";
 import { NoBlogsPublished } from "../components/noBlogPublised";
 import { FilterPaginationData } from "../common/filter-pagination";
+import { LoadMoreData } from "../components/load-more.component";
 const HomePage = () => {
   const [blogs, setBlog] = useState(null);
   const [trendingBlogs, setTrendingBlogs] = useState(null);
@@ -23,7 +24,7 @@ const HomePage = () => {
     "travel",
   ];
 
-  const fetchLatestBlogs = (page = 1) => {
+  const fetchLatestBlogs = ({ page = 1 }) => {
     axios
       .post(import.meta.env.VITE_SERVER_URL + "/latest-blogs", { page: page })
       .then(async ({ data }) => {
@@ -66,7 +67,7 @@ const HomePage = () => {
   useEffect(() => {
     activeTabButton.current.click();
     if (pageState === "home") {
-      fetchLatestBlogs();
+      fetchLatestBlogs({ page: 1 });
     } else {
       fetchBlogsByCategory();
     }
@@ -95,6 +96,7 @@ const HomePage = () => {
               ) : (
                 <NoBlogsPublished message={"No Blog Published"} />
               )}
+              <LoadMoreData state={blogs} fetchDataFun={fetchLatestBlogs} />
             </>
 
             {trendingBlogs === null ? (
@@ -106,7 +108,7 @@ const HomePage = () => {
             )}
           </InPageNavigation>
         </div>
-        <div className="min-w-[40%] lg:min-w-[400px] max-w-min bg-grey/65 border-grey border-3 pl-8 pt-3 max-md:hidden">
+        <div className="min-w-[40%] lg:min-w-[400px] max-w-min  border-grey border-3 pl-8 pt-3 max-md:hidden">
           <div className="flex flex-col gap-10">
             <div>
               <h1 className="font-medium text-xl mb-8">

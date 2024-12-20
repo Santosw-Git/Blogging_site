@@ -5,11 +5,11 @@ export const FilterPaginationData = async ({
   new_arr,
   page,
   countRoute,
-  data_to_send,
+  data_to_send = {},
 }) => {
   let obj;
   if (old_arr != null) {
-    obj = { results: [...old_arr.results, ...new_arr], page: page };
+    obj = { ...old_arr, results: [...old_arr.results, ...new_arr], page: page };
   } else {
     await axios
       .post(import.meta.env.VITE_SERVER_URL + countRoute, data_to_send)
